@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlı Hava Durumu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Arka Plan Geçiş Katmanları -->
+    <div id="bgLayer1" class="bg-layer bg-layer-default active"></div>
+    <div id="bgLayer2" class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+    
+    <!-- Canlı Efekt Canvas (Yağmur/Kar) -->
+    <canvas id="weatherCanvas"></canvas>
+
+    <div class="app-wrapper">
+        <!-- Üst Arama Barı -->
+        <header class="search-container">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Şehir ara... (Örn: İstanbul, Tokyo, London)" autocomplete="off">
+            </div>
+            <button id="searchBtn" class="btn-icon" title="Ara"><i class="fa-solid fa-arrow-right"></i></button>
+            <button id="locationBtn" class="btn-icon" title="Konumumu Kullan"><i class="fa-solid fa-location-crosshairs"></i></button>
+            <button id="unitToggle" class="btn-icon unit-toggle" title="Birim Değiştir">°C</button>
+        </header>
+
+        <!-- Yükleniyor Ekranı -->
+        <div id="loader" class="loader-container">
+            <div class="spinner"></div>
+            <p id="loaderMsg">Veriler Yükleniyor...</p>
+        </div>
+
+        <!-- Hava Durumu Ana Paneli -->
+        <main id="dashboard" class="dashboard-grid">
+            <!-- Sol Taraf: Derece Kartı (Şehir Resmi Arka Planlı) & Saatlik Akış -->
+            <div class="glass-card hero-card" id="heroCard">
+                <div class="hero-card-bg" id="heroCardBg"></div>
+                <div class="hero-card-overlay"></div>
+
+                <div class="hero-content">
+                    <div class="location-info">
+                        <h1 id="cityName">--</h1>
+                        <p id="currentDate">--</p>
+                    </div>
+                    
+                    <div class="weather-hero-main">
+                        <div class="temp-display">
+                            <span id="tempVal" class="temp-large">--</span>
+                            <span id="unitLabel" class="temp-unit">°C</span>
+                        </div>
+                        <div class="condition-box">
+                            <i id="heroIcon" class="fa-solid fa-sun"></i>
+                            <div id="conditionText" class="condition-text">--</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="section-title" id="hourlyTitle">Bugünün 24 Saatlik Akışı</div>
+                        <div id="hourlyContainer" class="hourly-scroll"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ Taraf: Metrikler & 7 Günlük Tahmin -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="glass-card">
+                    <div class="section-title">Detaylı Metrikler</div>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <i class="fa-solid fa-temperature-half"></i>
+                            <div class="metric-data">
+                                <span class="label">Hissedilen</span>
+                                <span id="feelsLike" class="val">--</span>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <i class="fa-solid fa-droplet"></i>
+                            <div class="metric-data">
+                                <span class="label">Nem</span>
+                                <span id="humidity" class="val">--</span>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <i class="fa-solid fa-wind"></i>
+                            <div class="metric-data">
+                                <span class="label">Rüzgar</span>
+                                <span id="wind" class="val">--</span>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <i class="fa-solid fa-gauge"></i>
+                            <div class="metric-data">
+                                <span class="label">Basınç / UV</span>
+                                <span id="pressure" class="val">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="flex: 1;">
+                    <div class="section-title">7 Günlük Tahmin <span style="font-weight:400; font-size:11px; opacity:0.8;">(Detay için tıklayın)</span></div>
+                    <div id="dailyContainer" class="daily-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
